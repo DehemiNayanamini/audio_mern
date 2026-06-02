@@ -29,6 +29,11 @@ const userSchema = new mongoose.Schema({
     phone: {
         type: String,
         required: true
+    },
+    profilePicture: {
+        type: String,
+        required: true,
+        default: 'https://commons.wikimedia.org/wiki/File:Default_pfp.jpg'
     }
 
 });
