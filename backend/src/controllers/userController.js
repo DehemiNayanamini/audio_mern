@@ -1,6 +1,7 @@
 import User from '../modules/users.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import dotenv from "dotenv";
 
 export function registerUser(req, res) {
 
@@ -32,7 +33,7 @@ export function loginUser(req, res) {
                     lastName : user.lastName,
                     email : user.email,
                     role : user.role
-                }, 'kv-secret-key24');
+                }, process.env.JWT_SECRET);
                 if(bcrypt.compareSync(data.password, user.password))
                     res.json({ message: 'Login successful', token: token });
                 else

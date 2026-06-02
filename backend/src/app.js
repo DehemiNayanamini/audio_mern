@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import jwt from 'jsonwebtoken';
 import productRouter from './routes/productRouter.js';
+import dotenv from "dotenv";
 const app = express();
 
 app.use(cors());
@@ -12,12 +13,12 @@ app.use((req, res,next)=>{
     let token = req.header("Authorization");
     if(token != null){
         token = token.replace("Bearer ", "");
-        jwt.verify(token, 'kv-secret-key24',
-    (err, decoded)=>{
-        if(!err){
-            req.user = decoded; 
-        }
-    });
+        jwt.verify(token, process.env.JWT_SECRET, (err, decoded)=>{
+            if(!err){
+                console.log(decoded);
+                req.user = decoded; 
+            }
+        });
     }
     next();
 });
