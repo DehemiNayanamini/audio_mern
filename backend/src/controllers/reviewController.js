@@ -38,24 +38,25 @@ export function addReview(req, res) {
 
 }
 
-export function getReviews(req, res) {
-     const user = req.user;
-
-     if(user == null || user.role !== 'admin'){
-         Review.find({isApproved: true}).then((reviews)=>{
+export async function getReviews(req, res) {
+    const user = req.user;
+    // const reviews = await Review.find();
+     
+    //     // Review.find().then((reviews)=>{
+    //     //         res.json(reviews);
+    //     // });
+    // res.json(reviews);
+    try{
+        if(user.Role == 'admin'){
+        const reviews = await Review.find();
+        res.json(reviews);
+        }else{
+            const reviews = await Review.find({isApproved: true});
             res.json(reviews);
-         }).catch((error) => {
-            res.status(500).json({message: 'Error fetching reviews'});
-         });
-         return;
-     }
-     if(user.role == "admin"){
-        Review.find().then((reviews)=>{
-                res.json(reviews);
-        }).catch((error) => {
-            res.status(500).json({message: 'Error fetching reviews'});
-        });
-     }    
+        }
+    }catch(e){
+        res.status(500).json({message: 'Error fetching reviews'});
+    }
 }
 
 export function deleteReview(req, res){
