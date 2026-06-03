@@ -4,6 +4,7 @@ import cors from "cors";
 import jwt from 'jsonwebtoken';
 import productRouter from './routes/productRouter.js';
 import reviewRouter from './routes/reviewRouter.js';
+import inquiryRouter from './routes/inquiryRouter.js';
 import dotenv from "dotenv";
 const app = express();
 
@@ -29,5 +30,6 @@ app.use((req, res,next)=>{
 app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
 app.use("/api/reviews", reviewRouter);
+app.use("/api/inquiries", inquiryRouter);
 
 export default app;
